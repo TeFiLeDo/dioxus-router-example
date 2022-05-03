@@ -1,0 +1,10 @@
+[package]
+name = "dioxus-blog"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dioxus = { git = "https://github.com/TeFiLeDo/dioxus", features = [
+    "web",
+    "router",
+] }
