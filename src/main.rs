@@ -5,40 +5,26 @@ fn main() {
 }
 
 fn app(cx: Scope) -> Element {
-    let routes = cx.use_hook(|_| Segment {
-        index: RcComponent(Home),
-        fixed: vec![
-            (
-                String::from("blog"),
-                Route {
-                    content: RcComponent(Blog),
-                    sub: Some(Segment {
-                        index: RcComponent(BlogList),
-                        dynamic: DrParameter {
-                            name: Some("blog_post"),
-                            key: "post_id",
-                            content: RcComponent(BlogPost),
-                            sub: None,
-                        },
-                        ..Default::default()
-                    }),
-                    ..Default::default()
-                },
-            ),
-            (
-                String::from("myblog"),
-                Route {
-                    content: RcRedirect(ItPath(String::from("/blog"))),
-                    ..Default::default()
-                },
-            ),
-        ],
-        ..Default::default()
+    let routes = use_segment(&cx, || {
+        Segment::default()
+            .index(RcComponent(Home))
+            .fixed(
+                "blog",
+                Route::new(RcComponent(Blog)).sub(
+                    Segment::default().index(RcComponent(BlogList)).dynamic(
+                        DynamicRoute::parameter("post_id", RcComponent(BlogPost)).name("blog_post"),
+                    ),
+                ),
+            )
+            .fixed(
+                "myblog",
+                Route::new(RcRedirect(NtPath(String::from("/blog")))),
+            )
     });
 
     cx.render(rsx! {
         Router {
-            routes: routes,
+            routes: routes.clone(),
             fallback: RcComponent(PageNotFound),
             NavBar {}
             Outlet {}
