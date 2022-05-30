@@ -8,3 +8,4 @@ dioxus = { git = "https://github.com/TeFiLeDo/dioxus", features = [
     "web",
     "router",
 ] }
+wasm-logger = "0.2"

@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
 
 fn main() {
+    wasm_logger::init(wasm_logger::Config::default());
     dioxus::web::launch(app)
 }
 
@@ -10,9 +11,9 @@ fn app(cx: Scope) -> Element {
             .index(RcComponent(Home))
             .fixed(
                 "blog",
-                Route::new(RcComponent(Blog)).sub(
-                    Segment::default().index(RcComponent(BlogList)).dynamic(
-                        DynamicRoute::parameter("post_id", RcComponent(BlogPost)).name("blog_post"),
+                Route::new(RcComponent(Blog)).nested(
+                    Segment::default().index(RcComponent(BlogList)).parameter(
+                        ParameterRoute::new("post_id", RcComponent(BlogPost)).name("blog_post"),
                     ),
                 ),
             )
