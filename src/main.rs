@@ -2,10 +2,11 @@ use dioxus::prelude::*;
 
 fn main() {
     wasm_logger::init(wasm_logger::Config::default());
-    dioxus::web::launch(app)
+    dioxus::web::launch(App)
 }
 
-fn app(cx: Scope) -> Element {
+#[allow(non_snake_case)]
+fn App(cx: Scope) -> Element {
     let routes = use_segment(&cx, || {
         Segment::default()
             .index(Home as Component)
@@ -37,7 +38,7 @@ fn NavBar(cx: Scope) -> Element {
             ul {
                 li {
                     Link {
-                        target: NtName("root_index", vec![], QNone),
+                        target: NtName("", vec![], QNone),
                         "Home"
                     }
                 }
