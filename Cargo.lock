@@ -130,14 +130,13 @@ dependencies = [
 [[package]]
 name = "dioxus"
 version = "0.2.4"
-source = "git+https://github.com/TeFiLeDo/dioxus#0d48d807967e0cf18f87fb8ac2f4a3538001fd95"
+source = "git+https://github.com/TeFiLeDo/dioxus#b794838b29396d0843def21225ab9dc9622c57f3"
 dependencies = [
  "dioxus-core",
  "dioxus-core-macro",
  "dioxus-hooks",
  "dioxus-html",
- "dioxus-router",
- "dioxus-web",
+ "dioxus-rsx",
 ]
 
 [[package]]
@@ -145,13 +144,15 @@ name = "dioxus-blog"
 version = "0.1.0"
 dependencies = [
  "dioxus",
+ "dioxus-router",
+ "dioxus-web",
  "wasm-logger",
 ]
 
 [[package]]
 name = "dioxus-core"
 version = "0.2.1"
-source = "git+https://github.com/TeFiLeDo/dioxus#0d48d807967e0cf18f87fb8ac2f4a3538001fd95"
+source = "git+https://github.com/TeFiLeDo/dioxus#b794838b29396d0843def21225ab9dc9622c57f3"
 dependencies = [
  "backtrace",
  "bumpalo",
@@ -170,9 +171,9 @@ dependencies = [
 [[package]]
 name = "dioxus-core-macro"
 version = "0.2.1"
-source = "git+https://github.com/TeFiLeDo/dioxus#0d48d807967e0cf18f87fb8ac2f4a3538001fd95"
+source = "git+https://github.com/TeFiLeDo/dioxus#b794838b29396d0843def21225ab9dc9622c57f3"
 dependencies = [
- "proc-macro-error",
+ "dioxus-rsx",
  "proc-macro2",
  "quote",
  "syn",
@@ -181,7 +182,7 @@ dependencies = [
 [[package]]
 name = "dioxus-hooks"
 version = "0.2.1"
-source = "git+https://github.com/TeFiLeDo/dioxus#0d48d807967e0cf18f87fb8ac2f4a3538001fd95"
+source = "git+https://github.com/TeFiLeDo/dioxus#b794838b29396d0843def21225ab9dc9622c57f3"
 dependencies = [
  "dioxus-core",
  "futures-channel",
@@ -191,7 +192,7 @@ dependencies = [
 [[package]]
 name = "dioxus-html"
 version = "0.2.1"
-source = "git+https://github.com/TeFiLeDo/dioxus#0d48d807967e0cf18f87fb8ac2f4a3538001fd95"
+source = "git+https://github.com/TeFiLeDo/dioxus#b794838b29396d0843def21225ab9dc9622c57f3"
 dependencies = [
  "dioxus-core",
  "enumset",
@@ -204,7 +205,7 @@ dependencies = [
 [[package]]
 name = "dioxus-interpreter-js"
 version = "0.2.1"
-source = "git+https://github.com/TeFiLeDo/dioxus#0d48d807967e0cf18f87fb8ac2f4a3538001fd95"
+source = "git+https://github.com/TeFiLeDo/dioxus#b794838b29396d0843def21225ab9dc9622c57f3"
 dependencies = [
  "js-sys",
  "wasm-bindgen",
@@ -214,29 +215,33 @@ dependencies = [
 [[package]]
 name = "dioxus-router"
 version = "0.2.3"
-source = "git+https://github.com/TeFiLeDo/dioxus#0d48d807967e0cf18f87fb8ac2f4a3538001fd95"
+source = "git+https://github.com/TeFiLeDo/dioxus#b794838b29396d0843def21225ab9dc9622c57f3"
 dependencies = [
- "dioxus-core",
- "dioxus-core-macro",
- "dioxus-html",
+ "dioxus",
  "futures-channel",
  "futures-util",
- "gloo-events",
- "js-sys",
  "log",
  "regex",
  "serde",
  "serde_urlencoded",
  "url",
  "urlencoding",
- "wasm-bindgen",
- "web-sys",
+]
+
+[[package]]
+name = "dioxus-rsx"
+version = "0.0.0"
+source = "git+https://github.com/TeFiLeDo/dioxus#b794838b29396d0843def21225ab9dc9622c57f3"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
 name = "dioxus-web"
 version = "0.2.1"
-source = "git+https://github.com/TeFiLeDo/dioxus#0d48d807967e0cf18f87fb8ac2f4a3538001fd95"
+source = "git+https://github.com/TeFiLeDo/dioxus#b794838b29396d0843def21225ab9dc9622c57f3"
 dependencies = [
  "anyhow",
  "console_error_panic_hook",
@@ -363,16 +368,6 @@ name = "gimli"
 version = "0.26.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "22030e2c5a68ec659fde1e949a745124b48e6fa8b045b7ed5bd1fe4ccc5c4e5d"
-
-[[package]]
-name = "gloo-events"
-version = "0.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "68b107f8abed8105e4182de63845afcc7b69c098b7852a813ea7462a320992fc"
-dependencies = [
- "wasm-bindgen",
- "web-sys",
-]
 
 [[package]]
 name = "gloo-timers"
@@ -530,30 +525,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 
 [[package]]
-name = "proc-macro-error"
-version = "1.0.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "da25490ff9892aab3fcf7c36f08cfb902dd3e71ca0f9f9517bea02a73a5ce38c"
-dependencies = [
- "proc-macro-error-attr",
- "proc-macro2",
- "quote",
- "syn",
- "version_check",
-]
-
-[[package]]
-name = "proc-macro-error-attr"
-version = "1.0.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a1be40180e52ecc98ad80b184934baf3d0d29f979574e439af5a55274b35f869"
-dependencies = [
- "proc-macro2",
- "quote",
- "version_check",
-]
-
-[[package]]
 name = "proc-macro2"
 version = "1.0.43"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -629,17 +600,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
-]
-
-[[package]]
-name = "serde_json"
-version = "1.0.83"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "38dd04e3c8279e75b31ef29dbdceebfe5ad89f4d0937213c53f7d49d01b3d5a7"
-dependencies = [
- "itoa",
- "ryu",
- "serde",
 ]
 
 [[package]]
@@ -750,20 +710,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "68b90931029ab9b034b300b797048cf23723400aa757e8a2bfb9d748102f9821"
 
 [[package]]
-name = "version_check"
-version = "0.9.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
-
-[[package]]
 name = "wasm-bindgen"
 version = "0.2.82"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fc7652e3f6c4706c8d9cd54832c4a4ccb9b5336e2c3bd154d5cccfbf1c1f5f7d"
 dependencies = [
  "cfg-if",
- "serde",
- "serde_json",
  "wasm-bindgen-macro",
 ]
 
