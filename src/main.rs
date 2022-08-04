@@ -25,6 +25,7 @@ fn App(cx: Scope) -> Element {
         Router {
             routes: routes.clone(),
             fallback: RcComponent(PageNotFound),
+            active_class: "active"
             NavBar {}
             Outlet {}
         }
