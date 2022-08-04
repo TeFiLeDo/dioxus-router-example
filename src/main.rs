@@ -8,19 +8,16 @@ fn main() {
 fn app(cx: Scope) -> Element {
     let routes = use_segment(&cx, || {
         Segment::default()
-            .index(RcComponent(Home))
+            .index(Home as Component)
             .fixed(
                 "blog",
-                Route::new(RcComponent(Blog)).nested(
-                    Segment::default().index(RcComponent(BlogList)).parameter(
-                        ParameterRoute::new("post_id", RcComponent(BlogPost)).name("blog_post"),
+                Route::new(Blog as Component).nested(
+                    Segment::default().index(BlogList as Component).parameter(
+                        ParameterRoute::new("post_id", BlogPost as Component).name("blog_post"),
                     ),
                 ),
             )
-            .fixed(
-                "myblog",
-                Route::new(RcRedirect(NtPath(String::from("/blog")))),
-            )
+            .fixed("myblog", "/blog")
     });
 
     cx.render(rsx! {
@@ -46,7 +43,7 @@ fn NavBar(cx: Scope) -> Element {
                 }
                 li {
                     Link {
-                        target: NtPath(String::from("/blog")),
+                        target: "/blog".into(),
                         "Blog"
                     }
                 }
